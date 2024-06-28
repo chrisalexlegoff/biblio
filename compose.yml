@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  # service Php
+  php:
+    build: './php_docker/'
+    container_name: php_biblio
+    volumes:
+      - ./www/:/var/www/html
+
+  # service Apache
+  apache:
+    build: './apache_docker/'
+    depends_on:
+      - php
+    ports:
+      - '8081:80'
+    volumes:
+      - ./www/:/var/www/html
