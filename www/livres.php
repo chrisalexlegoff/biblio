@@ -2,17 +2,19 @@
 <?php
 
 require_once 'Livre.class.php';
-$l1 = new Livre(1, "public/images/le_dev_fou.png", "Le développeur fou", 567);
-$l2 = new Livre(2, "public/images/mon-futur-site-web.png", "Mon futur site web", 345);
-$l3 = new Livre(3, "public/images/univers-algorithmie.png", "L'algorithmie", 4567);
+// $l1 = new Livre(1, "public/images/le_dev_fou.png", "Le développeur fou", 567);
+// $l2 = new Livre(2, "public/images/mon-futur-site-web.png", "Mon futur site web", 345);
+// $l3 = new Livre(3, "public/images/univers-algorithmie.png", "L'algorithmie", 4567);
 
 require_once 'LivreManager.class.php';
 $livreManager = new LivreManager;
-$livreManager->ajoutLivre($l1);
-$livreManager->ajoutLivre($l2);
-$livreManager->ajoutLivre($l3);
+// $livreManager->ajoutLivre($l1);
+// $livreManager->ajoutLivre($l2);
+// $livreManager->ajoutLivre($l3);
 
 // $livres = [$l1, $l2, $l3];
+
+$livreManager->ChargementLivres();
 
 ob_start() ?>
 
