@@ -1,6 +1,8 @@
 <?php
 
-class LivreManager
+require_once "ConnexionManager.class.php";
+
+class LivreManager extends ConnexionManager
 {
 
     private array $livres;
@@ -16,6 +18,18 @@ class LivreManager
         $this->livres[] = $nouveauLivre;
     }
 
+    public function ChargementLivres()
+    {
+        $req = $this->getConnexionBdd()->prepare("SELECT * From livre");
+        $req->execute();
+        $livresImportes = $req->fetchAll(PDO::FETCH_ASSOC);
+        $req->closeCursor();
+
+        foreach ($livresImportes as $livre) {
+            $nouveauLivre = new Livre($livre['id_livre'], $livre['image'], $livre['titre'], $livre['nb_pages']);
+            $this->ajoutLivre($nouveauLivre);
+        }
+    }
     /**
      * retourne le tableau de livres
      *
