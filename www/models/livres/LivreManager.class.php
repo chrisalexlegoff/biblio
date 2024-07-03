@@ -1,6 +1,8 @@
 <?php
 
-require_once "ConnexionManager.class.php";
+require_once "models/utils/ConnexionManager.class.php";
+require_once "models/livres/Livre.class.php";
+
 
 class LivreManager extends ConnexionManager
 {
@@ -26,7 +28,7 @@ class LivreManager extends ConnexionManager
         $req->closeCursor();
 
         foreach ($livresImportes as $livre) {
-            $nouveauLivre = new Livre($livre['id_livre'], $livre['image'], $livre['titre'], $livre['nb_pages']);
+            $nouveauLivre = new Livre($livre['id_livre'], $livre['image'], $livre['titre'], $livre['nb_pages'], $livre['texte_alternatif']);
             $this->ajoutLivre($nouveauLivre);
         }
     }
