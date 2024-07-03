@@ -6,7 +6,7 @@ abstract class ConnexionManager
 
     private static function setConnexionBdd()
     {
-        self::$connexion = new PDO("mysql:host=biblio_db;dbname=biblio", "db_user", "12345");
+        self::$connexion = new PDO("mysql:host=$_ENV[MYSQL_HOST];dbname=$_ENV[MYSQL_DATABASE]", $_ENV['MYSQL_USER'], $_ENV['MYSQL_PASSWORD']);
         self::$connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
     }
 

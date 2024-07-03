@@ -15,6 +15,7 @@ class Livre
      *
      * @var string
      */
+    private string $texteAlternatif;
     private string $urlImage;
     /**
      * 
@@ -32,12 +33,13 @@ class Livre
 
     // public static array $livres = [];
 
-    public function __construct(int $id, string $urlImage, string $titre, int $nbPages)
+    public function __construct(int $id, string $urlImage, string $titre, int $nbPages, string $texteAlternatif)
     {
         $this->id = $id;
         $this->urlImage = $urlImage;
         $this->titre = $titre;
         $this->nbPages = $nbPages;
+        $this->texteAlternatif = $texteAlternatif;
         // self::$livres[] = $this;
     }
 
@@ -130,6 +132,29 @@ class Livre
     public function setNbPages(int $nbPages): self
     {
         $this->nbPages = $nbPages;
+        return $this;
+    }
+
+    /**
+     * Get the value of texteAlternatif
+     *
+     * @return string
+     */
+    public function getTexteAlternatif(): string
+    {
+        return $this->texteAlternatif;
+    }
+
+    /**
+     * Set the value of texteAlternatif
+     *
+     * @param string $texteAlternatif
+     *
+     * @return self
+     */
+    public function setTexteAlternatif(string $texteAlternatif): self
+    {
+        $this->texteAlternatif = $texteAlternatif;
         return $this;
     }
 }
