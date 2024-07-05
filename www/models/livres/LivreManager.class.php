@@ -3,11 +3,10 @@
 require_once "models/utils/ConnexionManager.class.php";
 require_once "models/livres/Livre.class.php";
 
-
 class LivreManager extends ConnexionManager
 {
 
-    private array $livres;
+    private array $livres = [];
 
     /**
      * Méthode pour ajouter un livre dans la bibliothèque
@@ -32,6 +31,17 @@ class LivreManager extends ConnexionManager
             $this->ajoutLivre($nouveauLivre);
         }
     }
+
+    public function getLivreById(int $idLivre)
+    {
+        foreach ($this->livres as $livre) {
+            if ($livre->getId() === $idLivre) {
+                return $livre;
+            }
+        }
+        throw new Exception("Le livre avec l'id $idLivre n'existe pas");
+    }
+
     /**
      * retourne le tableau de livres
      *
