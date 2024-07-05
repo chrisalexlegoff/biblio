@@ -1,7 +1,9 @@
 <?php
 
 require_once "controllers/LivresController.class.php";
-$livreController = new LivresController();
+$livreController = new LivresController;
+require_once "controllers/ErreurController.class.php";
+$erreurController = new ErreurController;
 
 $strUrl = str_replace("index.php", "", (isset($_SERVER['HTTPS']) ? 'https' : 'http') . "://$_SERVER[HTTP_HOST]$_SERVER[PHP_SELF]");
 
@@ -10,18 +12,18 @@ define("SITE_URL_IMAGES", $strUrl . 'public/images/');
 
 try {
     if (empty($_GET['page'])) {
-        require_once "views/accueil.view.php";
+        $livreController->afficherLivresAccueil();;
     } else {
         $url = explode('/', filter_var($_GET['page'], FILTER_SANITIZE_URL));
         switch ($url[0]) {
             case 'accueil':
-                require_once "views/accueil.view.php";
+                $livreController->afficherLivresAccueil();;
                 break;
             case 'livres':
                 if (empty($url[1])) {
                     $livreController->afficherLivres();
                 } else if ($url[1] === "l") {
-                    echo "affichage d'un livre";
+                    $livreController->afficherLivre(intval($url[2]));
                 } else if ($url[1] === "a") {
                     echo "ajouter un livre";
                 } else if ($url[1] === "m") {
@@ -39,5 +41,7 @@ try {
     }
 } catch (Exception $e) {
     // echo $e->getMessage();
-    require_once "views/404.view.php";
+    $erreurController->afficher404();
+    // require_once "views/404.view.php";
+
 }

@@ -25,7 +25,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="livres">Livres</a>
+                        <a class="nav-link" href="<?= SITE_URL ?>livres">Livres</a>
                     </li>
             </div>
         </div>
