@@ -27,7 +27,7 @@ class LivreManager extends ConnexionManager
         $req->closeCursor();
 
         foreach ($livresImportes as $livre) {
-            $nouveauLivre = new Livre($livre['id_livre'], $livre['image'], $livre['titre'], $livre['nb_pages'], $livre['texte_alternatif']);
+            $nouveauLivre = new Livre($livre['id_livre'], $livre['url_image'], $livre['titre'], $livre['nb_pages'], $livre['texte_alternatif']);
             $this->ajoutLivre($nouveauLivre);
         }
     }
@@ -40,6 +40,23 @@ class LivreManager extends ConnexionManager
             }
         }
         throw new Exception("Le livre avec l'id $idLivre n'existe pas");
+    }
+
+    public function ajoutLivreBdd($titre, $nbPages, $texteAlternatif, $urlImage)
+    {
+        // protection injection sql
+        $req = "INSERT INTO livre (titre, nb_pages, url_image, texte_alternatif) VALUES (:titre, :nb_pages, :url_image, :texte_alternatif) ";
+        $stmt = $this->getConnexionBdd()->prepare($req);
+        $stmt->bindValue(":titre", $titre, PDO::PARAM_STR);
+        $stmt->bindValue(":nb_pages", $nbPages, PDO::PARAM_INT);
+        $stmt->bindValue(":url_image", $urlImage, PDO::PARAM_STR);
+        $stmt->bindValue(":texte_alternatif", $texteAlternatif, PDO::PARAM_STR);
+        $resultat = $stmt->execute();
+        $stmt->closeCursor();
+        if ($resultat) {
+            $livre = new Livre($this->getConnexionBdd()->lastInsertId(), $urlImage, $titre, $nbPages, $texteAlternatif);
+            $this->ajoutLivre($livre);
+        }
     }
 
     /**

@@ -16,6 +16,7 @@ RUN echo "xdebug.start_with_request=yes" >> /usr/local/etc/php/conf.d/xdebug.ini
 # installation des modules
 RUN docker-php-ext-install mysqli pdo pdo_mysql gd zip intl xml 
 
+COPY custom-php.ini /usr/local/etc/php/conf.d/custom-php.ini
 
 
 # nettoyage

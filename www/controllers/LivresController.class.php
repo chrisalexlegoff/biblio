@@ -32,4 +32,42 @@ class LivresController
         $livre = $this->livreManager->getLivreById($idLivre);
         require "views/afficherLivre.view.php";
     }
+
+    public function ajouterUnLivre()
+    {
+        require 'views/ajouterUnLivre.view.php';
+    }
+
+    public function ajouterUnLivreValidation()
+    {
+        $image = $_FILES['image'];
+        $dir = "public/images/";
+        $cheminImage =  $this->ajoutImage($image, $dir);
+
+        $this->livreManager->ajoutLivreBdd($_POST['titre'], intval($_POST['nbPages']), $_POST['texte-alternatif'], $cheminImage);
+
+        header('location: ' . SITE_URL . 'livres');
+    }
+
+    public function ajoutImage($file, $dir)
+    {
+        // y'a t'il une image ?
+        if (!isset($file['name']) || empty($file['name']))
+            throw new Exception("Veuillez uploader une image!");
+        // est-ce que le dossier "public/image" existe ?
+        if (!file_exists($dir)) mkdir($dir, 0777, true);
+        // création du nom de l'image unique pour le transfert serveur
+        $filename = uniqid() . "_" . $file['name'];
+        $target_file = $dir . $filename;
+        // est-ce qu'il s'agit bien d'une image ?
+        if (!getimagesize($file["tmp_name"])) throw new Exception("Uniquement image !");
+        // on récupère l'extension du fichier (ex: jpg)
+        $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        $extensionsTab = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+        if (!in_array($extension, $extensionsTab)) throw new Exception("extension non autorisée !");
+        if (file_exists($target_file)) throw new Exception("Le fichier existe déjà!");
+        if ($file['size'] > 500000) throw new Exception("Le fichier est trop volumineux!");
+        if (!move_uploaded_file($file['tmp_name'], $target_file)) throw new Exception("Le transfert de l'image à échoué !");
+        else return $filename;
+    }
 }

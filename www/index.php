@@ -25,7 +25,9 @@ try {
                 } else if ($url[1] === "l") {
                     $livreController->afficherLivre(intval($url[2]));
                 } else if ($url[1] === "a") {
-                    echo "ajouter un livre";
+                    $livreController->ajouterUnLivre();
+                } else if ($url[1] === "av") {
+                    $livreController->ajouterUnLivreValidation();
                 } else if ($url[1] === "m") {
                     echo "modifier un livre";
                 } else if ($url[1] === "s") {

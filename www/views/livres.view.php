@@ -38,7 +38,7 @@ ob_start(); ?>
     </div>
 <?php endif; ?>
 
-<a href="" class="btn btn-success d-block">Ajouter</a>
+<a href="<?= SITE_URL ?>livres/a" class="btn btn-success d-block">Ajouter</a>
 
 <?php
 $titre = "Les livres de la bibliothèque";

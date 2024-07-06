@@ -9,3 +9,5 @@ RUN echo "Include /usr/local/apache2/conf/apache-vhost.conf" \
     >> /usr/local/apache2/conf/httpd.conf \
     && echo "LoadModule rewrite_module modules/mod_rewrite.so" \
     >> /usr/local/apache2/conf/httpd.conf
+
+
