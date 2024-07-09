@@ -59,6 +59,42 @@ class LivreManager extends ConnexionManager
         }
     }
 
+    public function suppressionLivreBdd($idLivre)
+    {
+        // BDD
+        $req = "DELETE FROM livre WHERE id_livre = :id_livre";
+        $stmt = $this->getConnexionBdd()->prepare($req);
+        $stmt->bindValue(":id_livre", $idLivre, PDO::PARAM_INT);
+        $resultat = $stmt->execute();
+        $stmt->closeCursor();
+        // objet
+        if ($resultat) {
+            $livre = $this->getLivreById($idLivre);
+            unset($livre);
+        }
+    }
+
+    public function modificationLivreBdd(int $idLivre, string $titre, int $nbPages, string $texteAlternatif, string $nomImageToAdd): void
+    {
+        $req = "UPDATE livre SET titre = :titre, nb_pages = :nb_pages, url_image = :url_image, texte_alternatif = :texte_alternatif";
+        $stmt = $this->getConnexionBdd()->prepare($req);
+        $stmt->bindValue(":titre", $titre, PDO::PARAM_STR);
+        $stmt->bindValue(":nb_pages", $nbPages, PDO::PARAM_INT);
+        $stmt->bindValue(":url_image", $nomImageToAdd, PDO::PARAM_STR);
+        $stmt->bindValue(":texte_alternatif", $texteAlternatif, PDO::PARAM_STR);
+        $resultat = $stmt->execute();
+        $stmt->closeCursor();
+
+        // Si non récupération des livres au chargement du projet
+        // if ($resultat) {
+        //     $livre = $this->getLivreById($idLivre);
+        //     $livre->setTitre($titre);
+        //     $livre->setNbPages($nbPages);
+        //     $livre->setUrlImage($nomImageToAdd);
+        //     $livre->setTexteAlternatif($texteAlternatif);
+        // }
+    }
+
     /**
      * retourne le tableau de livres
      *
