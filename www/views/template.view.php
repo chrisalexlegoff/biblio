@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous" defer></script>
     <link rel="stylesheet" href="https://bootswatch.com/5/sketchy/bootstrap.min.css">
+    <script src="<?= SITE_URL ?>public/js/main.js" defer></script>
     <!-- <link rel="stylesheet" href="https://bootswatch.com/5/journal/bootstrap.min.css"> -->
     <title>Biblio | <?= $titre ?></title>
 </head>

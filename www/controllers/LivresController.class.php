@@ -70,4 +70,35 @@ class LivresController
         if (!move_uploaded_file($file['tmp_name'], $target_file)) throw new Exception("Le transfert de l'image à échoué !");
         else return $filename;
     }
+
+    public function suppressionLivre($idLivre)
+    {
+        $nomImage = $this->livreManager->getLivreById($idLivre)->getUrlImage();
+        unlink("public/images/" . $nomImage);
+        $this->livreManager->suppressionLivreBdd($idLivre);
+        header('location:' . SITE_URL . 'livres');
+    }
+
+    public function modifierLivre($idLivre)
+    {
+        $livre = $this->livreManager->getLivreById($idLivre);
+        require 'views/modifierLivre.view.php';
+    }
+
+    public function modifierLivreValidation()
+    {
+        $livre = $this->livreManager->getLivreById(intval($_POST['id_livre']));
+        $imageActuelle = $livre->getUrlImage();
+        $file = $_FILES['image'];
+        if ($file['size'] > 0) {
+            $cheminImage = "public/images/";
+            unlink($cheminImage . $imageActuelle);
+            $nomImageToAdd = $this->ajoutImage($file, $cheminImage);
+        } else {
+            $nomImageToAdd = $imageActuelle;
+        }
+
+        $this->livreManager->modificationLivreBdd(intval($_POST['id_livre']), $_POST['titre'], $_POST['nbPages'], $_POST['texte-alternatif'], $nomImageToAdd);
+        header('location:' . SITE_URL . 'livres/l/' . $_POST['id_livre']);
+    }
 }

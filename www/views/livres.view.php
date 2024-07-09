@@ -21,8 +21,19 @@ ob_start(); ?>
                 </td>
 
                 <td class="align-middle"><?= $livre->getNbPages(); ?></td>
-                <td class="align-middle"><a href="" class="btn btn-warning">Modifier</a></td>
-                <td class="align-middle"><a href="" class="btn btn-danger">Supprimer</a></td>
+
+                <td class="align-middle">
+
+                    <a href="<?= SITE_URL ?>livres/m/<?= $livre->getId() ?>" class="btn btn-warning">Modifier</a>
+
+                </td>
+
+                <td class="align-middle">
+                    <form method="post" action="<?= SITE_URL; ?>livres/s/<?= $livre->getId(); ?>" onSubmit="return confirm('ok')">
+                        <button class="btn btn-danger">Supprimer</button>
+                    </form>
+                </td>
+
             </tr>
         <?php endforeach; ?>
 
