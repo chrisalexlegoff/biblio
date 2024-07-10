@@ -1,4 +1,5 @@
 const input = document.querySelector('#imageUpload');
+
 input.addEventListener('change', () => previewPhoto());
 
 const previewPhoto = () => {

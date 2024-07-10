@@ -1,7 +1,7 @@
 <?php
 ob_start() ?>
 
-<form method="post" class="p-4" action="<?= SITE_URL ?>livres/mv" enctype="multipart/form-data" onSubmit="return confirm('Voulez-vous vraiement modifier le livre <?= $livre->getTitre(); ?>')">
+<form method="post" class="p-4" action="<?= SITE_URL ?>livres/mv" enctype="multipart/form-data" onSubmit="return confirm('Voulez-vous vraiment modififier le livre <?= $livre->getTitre();  ?> ?')">
     <div class="form-group my-4">
         <label for="titre">Titre : </label>
         <input class="form-control" name="titre" value="<?= $livre->getTitre() ?>" placeholder="Saisir le titre du livre" id="titre" type="text">
