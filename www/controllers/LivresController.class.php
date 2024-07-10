@@ -1,8 +1,9 @@
 <?php
 
 require_once "models/livres/livreManager.class.php";
+require "models/user/UserManager.class.php";
 
-class LivresController
+class LivresController extends UserManager
 {
 
     private LivreManager $livreManager;
@@ -15,6 +16,7 @@ class LivresController
 
     public function afficherLivres()
     {
+        $this->isAdmin();
         $livresTab = $this->livreManager->getLivres();
         $pasDeLivre = (count($livresTab) > 0) ? false : true;
         require_once "views/livres.view.php";
@@ -35,11 +37,13 @@ class LivresController
 
     public function ajouterUnLivre()
     {
+        $this->isAdmin();
         require 'views/ajouterUnLivre.view.php';
     }
 
     public function ajouterUnLivreValidation()
     {
+        $this->isAdmin();
         $image = $_FILES['image'];
         $dir = "public/images/";
         $cheminImage =  $this->ajoutImage($image, $dir);
@@ -51,6 +55,7 @@ class LivresController
 
     public function ajoutImage($file, $dir)
     {
+        $this->isAdmin();
         // y'a t'il une image ?
         if (!isset($file['name']) || empty($file['name']))
             throw new Exception("Veuillez uploader une image!");
@@ -73,6 +78,7 @@ class LivresController
 
     public function suppressionLivre($idLivre)
     {
+        $this->isAdmin();
         $nomImage = $this->livreManager->getLivreById($idLivre)->getUrlImage();
         unlink("public/images/" . $nomImage);
         $this->livreManager->suppressionLivreBdd($idLivre);
@@ -81,12 +87,14 @@ class LivresController
 
     public function modifierLivre($idLivre)
     {
+        $this->isAdmin();
         $livre = $this->livreManager->getLivreById($idLivre);
         require 'views/modifierLivre.view.php';
     }
 
     public function modifierLivreValidation()
     {
+        $this->isAdmin();
         $livre = $this->livreManager->getLivreById(intval($_POST['id_livre']));
         $imageActuelle = $livre->getUrlImage();
         $file = $_FILES['image'];
