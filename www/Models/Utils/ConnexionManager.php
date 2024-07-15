@@ -1,5 +1,9 @@
 <?php
 
+namespace Models\Utils;
+
+use PDO;
+
 abstract class ConnexionManager
 {
     private static $connexion;

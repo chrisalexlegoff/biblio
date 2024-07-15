@@ -1,6 +1,8 @@
 <?php
 
-require_once 'models/error/Erreur.class.php';
+namespace Controllers\Error;
+
+use Models\Erreur\Erreur;
 
 class ErreurController
 {
@@ -13,7 +15,7 @@ class ErreurController
 
     public function afficher404()
     {
-        require 'views/404.view.php';
+        require '../views/404.view.php';
     }
 
     /**

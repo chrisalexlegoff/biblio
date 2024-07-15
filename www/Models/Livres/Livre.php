@@ -1,5 +1,7 @@
 <?php
 
+namespace Models\Livres;
+
 class Livre
 {
 

@@ -1,8 +1,9 @@
 <!-- temporisation -->
 <?php
 
-ob_start(); ?>
-
+ob_start();
+//  echo $_SESSION['biblio_csrf_token'];
+?>
 <?php if ($pasDeLivre === false) : ?>
     <table class="table text-center">
         <tr class="table-dark">

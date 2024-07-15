@@ -1,7 +1,11 @@
 <?php
 
-require_once "models/utils/ConnexionManager.class.php";
-require_once "models/livres/Livre.class.php";
+namespace Models\Livres;
+
+use PDO;
+use Exception;
+use Models\Livres\Livre;
+use Models\Utils\ConnexionManager;
 
 class LivreManager extends ConnexionManager
 {
@@ -76,9 +80,10 @@ class LivreManager extends ConnexionManager
 
     public function modificationLivreBdd(int $idLivre, string $titre, int $nbPages, string $texteAlternatif, string $nomImageToAdd): void
     {
-        $req = "UPDATE livre SET titre = :titre, nb_pages = :nb_pages, url_image = :url_image, texte_alternatif = :texte_alternatif";
+        $req = "UPDATE livre SET titre = :titre, nb_pages = :nb_pages, url_image = :url_image, texte_alternatif = :texte_alternatif WHERE id_livre=:id_livre";
         $stmt = $this->getConnexionBdd()->prepare($req);
         $stmt->bindValue(":titre", $titre, PDO::PARAM_STR);
+        $stmt->bindValue(":id_livre", $idLivre, PDO::PARAM_INT);
         $stmt->bindValue(":nb_pages", $nbPages, PDO::PARAM_INT);
         $stmt->bindValue(":url_image", $nomImageToAdd, PDO::PARAM_STR);
         $stmt->bindValue(":texte_alternatif", $texteAlternatif, PDO::PARAM_STR);

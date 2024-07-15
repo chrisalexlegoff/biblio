@@ -1,5 +1,7 @@
 <?php
 
+namespace Models\Erreur;
+
 class Erreur
 {
     private string $message;

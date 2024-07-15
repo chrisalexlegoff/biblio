@@ -1,7 +1,10 @@
 <?php
 
-require_once "models/livres/livreManager.class.php";
-require "models/user/UserManager.class.php";
+namespace Controllers\Livre;
+
+use Exception;
+use Models\User\UserManager;
+use Models\Livres\LivreManager;
 
 class LivresController extends UserManager
 {
@@ -19,33 +22,33 @@ class LivresController extends UserManager
         $this->isAdmin();
         $livresTab = $this->livreManager->getLivres();
         $pasDeLivre = (count($livresTab) > 0) ? false : true;
-        require_once "views/livres.view.php";
+        require_once "../views/livres.view.php";
     }
 
     public function afficherLivresAccueil()
     {
         $livresTab = $this->livreManager->getLivres();
         (count($livresTab) > 0) ? $pasDeLivre = false : $pasDeLivre = true;
-        require "views/accueil.view.php";
+        require "../views/accueil.view.php";
     }
 
     public function afficherLivre(int $idLivre)
     {
         $livre = $this->livreManager->getLivreById($idLivre);
-        require "views/afficherLivre.view.php";
+        require "../views/afficherLivre.view.php";
     }
 
     public function ajouterUnLivre()
     {
         $this->isAdmin();
-        require 'views/ajouterUnLivre.view.php';
+        require '../views/ajouterUnLivre.view.php';
     }
 
     public function ajouterUnLivreValidation()
     {
         $this->isAdmin();
         $image = $_FILES['image'];
-        $dir = "public/images/";
+        $dir = "images/";
         $cheminImage =  $this->ajoutImage($image, $dir);
 
         $this->livreManager->ajoutLivreBdd($_POST['titre'], intval($_POST['nbPages']), $_POST['texte-alternatif'], $cheminImage);
@@ -59,7 +62,7 @@ class LivresController extends UserManager
         // y'a t'il une image ?
         if (!isset($file['name']) || empty($file['name']))
             throw new Exception("Veuillez uploader une image!");
-        // est-ce que le dossier "public/image" existe ?
+        // est-ce que le dossier "image" existe ?
         if (!file_exists($dir)) mkdir($dir, 0777, true);
         // création du nom de l'image unique pour le transfert serveur
         $filename = uniqid() . "_" . $file['name'];
@@ -80,7 +83,7 @@ class LivresController extends UserManager
     {
         $this->isAdmin();
         $nomImage = $this->livreManager->getLivreById($idLivre)->getUrlImage();
-        unlink("public/images/" . $nomImage);
+        unlink("images/" . $nomImage);
         $this->livreManager->suppressionLivreBdd($idLivre);
         header('location:' . SITE_URL . 'livres');
     }
@@ -89,7 +92,7 @@ class LivresController extends UserManager
     {
         $this->isAdmin();
         $livre = $this->livreManager->getLivreById($idLivre);
-        require 'views/modifierLivre.view.php';
+        require '../views/modifierLivre.view.php';
     }
 
     public function modifierLivreValidation()
@@ -99,7 +102,7 @@ class LivresController extends UserManager
         $imageActuelle = $livre->getUrlImage();
         $file = $_FILES['image'];
         if ($file['size'] > 0) {
-            $cheminImage = "public/images/";
+            $cheminImage = "images/";
             unlink($cheminImage . $imageActuelle);
             $nomImageToAdd = $this->ajoutImage($file, $cheminImage);
         } else {

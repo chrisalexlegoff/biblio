@@ -1,7 +1,10 @@
 <?php
 
-require_once 'models/user/User.class.php';
-require_once 'models/utils/ConnexionManager.class.php';
+namespace Models\User;
+
+use PDO;
+use Models\User\User;
+use Models\Utils\ConnexionManager;
 
 class UserManager extends ConnexionManager
 {

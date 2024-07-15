@@ -4,20 +4,20 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// echo $_SESSION['admin'] ?? NULL;
-// die();
+require "../vendor/autoload.php";
 
-require_once "controllers/LivresController.class.php";
+use Controllers\Error\ErreurController;
+use Controllers\Livre\LivresController;
+use Controllers\User\UserController as UserControllerEnCours;
+
 $livreController = new LivresController;
-require_once "controllers/ErreurController.class.php";
 $erreurController = new ErreurController;
-require_once "controllers/user/UserController.class.php";
-$userController = new UserController;
+$userController = new UserControllerEnCours();
 
 $strUrl = str_replace("index.php", "", (isset($_SERVER['HTTPS']) ? 'https' : 'http') . "://$_SERVER[HTTP_HOST]$_SERVER[PHP_SELF]");
 
 define("SITE_URL", $strUrl);
-define("SITE_URL_IMAGES", $strUrl . 'public/images/');
+define("SITE_URL_IMAGES", $strUrl . 'images/');
 
 try {
     if (empty($_GET['page'])) {
@@ -34,6 +34,9 @@ try {
                 } else if ($url[1] === "v") {
                     $userController->loginPost();
                 }
+                break;
+            case 'logout':
+                $userController->logout();
                 break;
             case 'livres':
                 if (empty($url[1])) {
@@ -60,8 +63,8 @@ try {
         }
     }
 } catch (Exception $e) {
-    // echo $e->getMessage();
+    $e->getMessage();
     $erreurController->afficher404();
-    // require_once "views/404.view.php";
+    // require_once "../views/404.view.php";
 
 }

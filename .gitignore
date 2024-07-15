@@ -2,4 +2,6 @@
 .env.*
 /.vscode
 /database
-.htaccess
+/public/.htaccess
+
+/vendor/

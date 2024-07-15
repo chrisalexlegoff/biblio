@@ -1,8 +1,21 @@
 <?php
 
-ob_start() ?>
+ob_start();
+?>
 
 <div class="container">
+    <?php if (isset($_SESSION['errors'])) : ?>
+        <?php foreach ($_SESSION['errors'] as $errorsArray) : ?>
+            <?php foreach ($errorsArray as $errors) : ?>
+                <div class="alert alert-danger">
+                    <?php foreach ($errors as $error) : ?>
+                        <li><?= $error ?></li>
+                    <?php endforeach; ?>
+                </div>
+            <?php endforeach; ?>
+        <?php endforeach; ?>
+    <?php endif; ?>
+    <?php unset($_SESSION['errors']) ?>
     <div class="row">
         <div class="col-md-6 mx-auto">
             <div class="card card-body bg-light mt-5">
@@ -11,7 +24,7 @@ ob_start() ?>
                 <form method="post" action="<?= SITE_URL ?>login/v">
                     <div class="form-group my-4">
                         <label for="email">Email : </label>
-                        <input class="form-control" name="email" placeholder="Saisir votre adresse mail" id="email" type="email">
+                        <input class="form-control" name="email" placeholder="Saisir votre adresse mail" id="email" type="text">
                     </div>
                     <div class="form-group my-4">
                         <label for="password">Mot de passe : </label>
